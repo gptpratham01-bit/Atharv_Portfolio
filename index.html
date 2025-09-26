@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atharv Gupta — Portfolio</title>
+  <meta name="description" content="Portfolio showcasing content creation: videos, articles, reels." />
+  <style>
+    /* -----------------------------
+       Simple, modern portfolio
+       Replace texts & images with your own
+       ----------------------------- */
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#6ee7b7; /* turquoise */
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --max-w:1100px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#071024);color:#e6eef6;line-height:1.45}
+    .wrap{max-width:var(--max-w);margin:36px auto;padding:24px}
+
+    header{display:flex;gap:18px;align-items:center}
+    .avatar{width:78px;height:78px;border-radius:14px;overflow:hidden;flex:0 0 78px;border:2px solid rgba(255,255,255,0.06)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    h1{margin:0;font-size:22px}
+    .subtitle{color:var(--muted);font-size:14px}
+
+    .hero{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:22px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);}
+
+    .stats{display:flex;gap:12px;margin-top:12px}
+    .stat{background:var(--glass);padding:10px;border-radius:12px;text-align:center;flex:1}
+    .stat strong{display:block;font-size:18px}
+
+    /* gallery */
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--muted)}
+    .btn.active{border-color:var(--accent);color:var(--accent)}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+    .item{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column}
+    .thumb{height:140px;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+    .item:hover .thumb img{transform:scale(1.04)}
+    .meta{padding:12px}
+    .meta h3{margin:0;font-size:15px}
+    .meta p{margin:8px 0 0;color:var(--muted);font-size:13px}
+
+    /* sidebar */
+    .sidebar .contact-row{display:flex;gap:8px;align-items:center;margin-top:12px}
+    .pill{background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:999px;color:var(--muted);font-size:13px}
+
+    footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* modal */
+    .modal{position:fixed;inset:0;background:linear-gradient(180deg, rgba(2,8,23,0.6), rgba(2,6,23,0.85));display:none;align-items:center;justify-content:center;padding:20px}
+    .modal.open{display:flex}
+    .modal .box{max-width:900px;width:100%;background:#061126;border-radius:12px;padding:18px}
+    .modal .box .media{height:480px;background:#021028;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .close{background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .avatar{width:64px;height:64px}
+      .modal .box .media{height:320px}
+    }
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    a.link{color:var(--accent);text-decoration:none}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="avatar"><img src="./ath.jpeg" alt="avatar"></div>
+      <div>
+        <h1>Atharv Gupta</h1>
+        <div class="subtitle">Content Creator — Videos • Articles • Social Campaigns</div>
+        <div class="stats" style="width:520px">
+          <div class="stat"><strong>50+</strong><span class="muted">Published pieces</span></div>
+          <div class="stat"><strong>40K</strong><span class="muted">Combined views</span></div>
+          <div class="stat"><strong>1</strong><span class="muted">Clients / Collaborations</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="hero">
+      <div class="card">
+        <h2 style="margin-top:0">Featured works</h2>
+        <p class="muted">A curated selection of articles and short videos. Click any tile to open a larger view with details and links.</p>
+
+        <div class="controls" id="filters">
+          <button class="btn active" data-filter="all">All</button>
+          <button class="btn" data-filter="video">Video</button>
+          <button class="btn" data-filter="article">Article</button>
+          <button class="btn" data-filter="social">Social</button>
+        </div>
+
+        <div class="grid" id="gallery">
+          <!-- example items: replace the thumbnails, titles, and data-link with your real content -->
+          <article class="item" data-type="article" data-title="Weight Loss" data-desc="A practical guide to optimize your content" data-link="https://www.everydayhealth.com/diet-and-nutrition/diet/tips-weight-loss-actually-work/">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thumbnail"></div>
+            <div class="meta"><h3>How TO Loose Weight Without Lossing Muscles</h3><p class="muted">Long-form article</p></div>
+          </article>
+
+          <article class="item" data-type="video" data-title="How I Plan a Viral Reel" data-desc="Short-form workflow + editing tips" data-link="https://www.instagram.com/reel/DNngMIUSzlC/?igsh=MXc4ZzYzaW9vOG9sYQ==" tabindex="0">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1636971828014-0f3493cba88a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thumbnail"></div>
+            <div class="meta"><h3>Viral Reel Workflow</h3><p class="muted">"Reel Demo"</p></div>
+          </article>
+
+          <article class="item" data-type="video" data-title="Food Awareness Reel" data-desc="Quick Food Recipe" data-link="https://www.instagram.com/reel/DMKRiuWys66/?igsh=dmNpdzl5NDFhZ2Jq">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=1200&q=60" alt="thumbnail"></div>
+            <div class="meta"><h3>Quick Recipe</h3><p class="muted">Tutorial video</p></div>
+          </article>
+
+          <article class="item" data-type="social" data-title="Brand Campaign — Eco" data-desc="Campaign assets & results" data-link="#">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&q=60" alt="thumbnail"></div>
+            <div class="meta"><h3>Eco Campaign</h3><p class="muted">Instagram / TikTok sets</p></div>
+          </article>
+
+          <!-- add more items as needed -->
+        </div>
+      </div>
+
+      <aside class="card sidebar">
+        <h3 style="margin-top:0">About</h3>
+        <p class="muted">Hi — I'm <strong>Atharv Gupta</strong>. a B.Com (Hons) student at Delhi University, fitness enthusiast, and content creator. I balance academics in subjects like Indian Economy and GST & Customs Law with my passion for fitness and nutrition, where I share a 100-day fitness series on Instagram to simplify workouts, diet, and lifestyle for beginners.
+        What defines me is discipline and adaptability—from cooking high-protein meals on a student budget without a fridge, to creating aesthetic fitness photos with low-cost setups. I believe in turning limitations into strengths, staying consistent, and inspiring others through my journey.
+        My vision is simple: grow, inspire, and build opportunities where commerce, creativity, and fitness meet.</p>
+        <div class="contact-row">
+          <a class="pill" href="atharvgupta565@gmail.com">Email</a>
+          <a class="pill" href="https://drive.google.com/file/d/1OOi78kDBlynDcguCrdDFkaIixPdcMep5/view?usp=drivesdk">Download Resume</a>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="muted">Specialties</div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <span class="pill">Short videos</span>
+            <span class="pill">Social strategy</span>
+            <span class="pill">Editing</span>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <div class="muted">Social</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <a class="link" href="https://youtube.com/@theatharvvgupta?si=0-z4ExePCKmRAHdO">YouTube</a>
+            <span class="muted">•</span>
+            <a class="link" href="https://www.instagram.com/theatharvvgupta?igsh=N2hlOTc3dDRjdnB4">Instagram</a>
+            <span class="muted">•</span>
+            <a class="link" href="#">LinkedIn</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="muted"></footer>
+  </main>
+
+  <!-- modal viewer -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div>
+          <strong id="modal-title">Title</strong>
+          <div id="modal-desc" class="muted" style="font-size:13px"></div>
+        </div>
+        <div>
+          <button class="close" id="modal-open-link">Open</button>
+          <button class="close" id="modal-close">✕</button>
+        </div>
+      </div>
+      <div class="media" id="modal-media">Loading…</div>
+    </div>
+  </div>
+
+  <script>
+    // --- Simple gallery + modal logic ---
+    const filters = document.getElementById('filters');
+    const buttons = [...filters.querySelectorAll('.btn')];
+    const gallery = document.getElementById('gallery');
+    const items = [...gallery.querySelectorAll('.item')];
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalMedia = document.getElementById('modal-media');
+    const modalOpenLink = document.getElementById('modal-open-link');
+
+    function setActive(btn){buttons.forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+
+    filters.addEventListener('click', e=>{
+      const btn = e.target.closest('.btn');
+      if(!btn) return;
+      setActive(btn);
+      const filter = btn.getAttribute('data-filter');
+      items.forEach(it=>{
+        const type = it.getAttribute('data-type');
+        it.style.display = (filter==='all' || filter===type) ? '' : 'none';
+      });
+    });
+
+    // open modal on item click
+    items.forEach(it=>{
+      it.addEventListener('click', ()=>openModal(it));
+      it.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openModal(it) });
+    });
+
+    function openModal(item){
+      const title = item.getAttribute('data-title');
+      const desc = item.getAttribute('data-desc');
+      const link = item.getAttribute('data-link');
+      const type = item.getAttribute('data-type');
+
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+      modalOpenLink.onclick = ()=>{ window.open(link, '_blank') };
+
+      // inject media preview depending on type (simple, replace with actual embed if you have urls)
+      if(type==='video'){
+        modalMedia.innerHTML = `<video controls style="width:100%;height:100%;object-fit:contain"><source src="" type="video/mp4">Your browser doesn't support video tag.</video>`;
+      } else if(type==='article'){
+        modalMedia.innerHTML = `<div style="padding:18px;color:var(--muted)"><p style="margin-top:0">How to Lose Fat Without Losing Muscle
+
+Losing fat does not mean you have to sacrifice your muscle. The key is to cut calories smartly, fuel your body with the right foods, and keep training consistently.
+
+Start with a moderate calorie deficit of about 300–500 calories below your maintenance. Going too low will make you weak, reduce gym performance, and increase muscle loss. Aim for steady fat loss of 0.5–1% of your body weight per week instead of rushing the process.
+
+Your protein intake is the most important part of your diet. Try to eat 1.6–2.2 grams of protein per kilogram of body weight daily. Spread this across meals for steady supply. You don’t need expensive foods — dals, soya chunks, peanuts, legumes, eggs, chana, and milk are affordable and easily available in India. Combine these with carbs like rice and oats for energy and veggies for fiber and vitamins.
+
+For workouts, make strength training your priority. Train 3–5 days per week with compound exercises such as squats, deadlifts, push-ups, rows, and overhead presses. Use progressive overload — gradually increase weights, reps, or sets — to keep sending the “muscle maintenance” signal to your body. If you are tired, reduce cardio before reducing strength training.
+
+Cardio is still helpful but should be balanced. Moderate cardio like walking or cycling supports fat burn, while 1–2 HIIT sessions can boost metabolism. Avoid too much cardio, as it can eat into recovery and cause muscle breakdown.
+
+Finally, never ignore rest and recovery. Sleep 7–9 hours, take rest days, and track your lifts to ensure your strength is steady. Supplements like creatine may help, but food, training, and recovery matter most.
+
+Consistency in diet, training, and sleep will help you lose fat, protect muscle, and feel stronger every week.</p></div>`;
+      } else {
+        modalMedia.innerHTML = `<div style="padding:18px;color:var(--muted)"><p style="margin-top:0">Campaign assets and carousel go here.</p></div>`;
+      }
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    document.getElementById('modal-close').addEventListener('click', ()=>{
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+    });
+
+    // close on backdrop click
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true') } });
+
+    // keyboard ESC to close
+    window.addEventListener('keydown', e=>{ if(e.key==='Escape') modal.classList.remove('open') });
+
+    // small helper: you can dynamically add items using JS if you want to fetch from an API or CMS
+  </script>
+</body>
+</html>
